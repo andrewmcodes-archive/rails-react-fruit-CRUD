@@ -56,9 +56,9 @@ componentDidMount(){
   }
 render(){
     return(
-      <div>
-        <NewFruit handleFormSubmit={this.handleFormSubmit}/>
-        <AllFruits fruits={this.state.fruits} handleDelete={this.handleDelete} />
+      <div className="flex flex-col">
+        <NewFruit className="block" handleFormSubmit={this.handleFormSubmit}/>
+        <AllFruits className="block" fruits={this.state.fruits} handleDelete={this.handleDelete} />
       </div>
     )
   }
