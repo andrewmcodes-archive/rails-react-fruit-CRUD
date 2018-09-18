@@ -4,9 +4,31 @@ class Body extends React.Component {
     this.state = {
       fruits: []
     };
-    this.handleFormSubmit = this.handleFormSubmit.bind(this)
-    this.addNewFruit = this.addNewFruit.bind(this)
-    this.handleDelete = this.handleDelete.bind(this)
+    this.handleFormSubmit = this.handleFormSubmit.bind(this);
+    this.addNewFruit = this.addNewFruit.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
+    this.handleUpdate = this.handleUpdate.bind(this);
+    this.updateFruit = this.updateFruit.bind(this);
+  }
+
+  handleUpdate(fruit){
+    fetch(`http://localhost:3000/api/v1/fruits/${fruit.id}`,
+    {
+      method: 'PUT',
+      body: JSON.stringify({fruit: fruit}),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then((response) => {
+        this.updateFruit(fruit)
+      })
+  }
+  updateFruit(fruit){
+    let newFruits = this.state.fruits.filter((f) => f.id !== fruit.id)
+    newFruits.push(fruit)
+    this.setState({
+      fruits: newFruits
+    })
   }
 
   handleDelete(id){
@@ -58,7 +80,7 @@ render(){
     return(
       <div className="flex flex-col">
         <NewFruit className="block" handleFormSubmit={this.handleFormSubmit}/>
-        <AllFruits className="block" fruits={this.state.fruits} handleDelete={this.handleDelete} />
+        <AllFruits className="block" fruits={this.state.fruits} handleDelete={this.handleDelete} handleUpdate = {this.handleUpdate}/>
       </div>
     )
   }
